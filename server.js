@@ -51,6 +51,11 @@ function promptUser() {
           "View all Departments",
           "View all Roles",
           "View all Employees",
+          "Add a Department",
+          "Add a Role",
+          "Add an Employee",
+          "Update a Employee Role",
+          "Exit Application",
         ],
       },
     ])
@@ -66,15 +71,40 @@ function promptUser() {
             console.log("\n");
             console.table(rows);
             console.log("\n");
+
+            promptUser();
           });
-        console.log("\n");
-        console.log("\n");
-        console.log("\n");
-        console.log("\n");
-        promptUser();
+      } else if (data.menu === "View all Roles") {
+        db.promise()
+          .query(
+            "SELECT role.id, role.title, role.salary, department.name_department as department_name FROM role LEFT JOIN department on role.department_name = department.id;"
+          )
+          .then((data) => {
+            const [rows] = data;
+            console.log("\n");
+            console.table(rows);
+            console.log("\n");
+
+            promptUser();
+          });
+      } else if (data.menu === "View all Employees") {
+        db.promise()
+          .query("Select * from employee")
+          .then((data) => {
+            const [rows] = data;
+            console.log("\n");
+            console.table(rows);
+            console.log("\n");
+
+            promptUser();
+          });
+      } else if (data.menu === "Add a Department") {
+      } else if (data.menu === "Add a Role") {
+      } else if (data.menu === "Add an Employee") {
+      } else if (data.menu === "Update a Employee Role") {
       } else {
-        console.log("Wrong choice");
-        promptUser();
+        console.log("Thank you for using Employee Tracker and Bye Now!");
+        process.exit(1);
       }
     });
 }
